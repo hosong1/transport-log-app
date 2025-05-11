@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>기록 보기</title>
+</head>
+<body>
+  <h2>운송기록</h2>
+  <div id="list"></div>
+
+  <script>
+    const user = localStorage.getItem("currentUser");
+    const records = JSON.parse(localStorage.getItem("records") || "[]");
+    const list = document.getElementById("list");
+
+    const userRecords = records.filter(r => r.user === user);
+    if (userRecords.length === 0) list.innerText = "기록이 없습니다.";
+
+    userRecords.forEach(r => {
+      const div = document.createElement("div");
+      div.innerText = `📅 ${r.date} | 🏷️ ${r.job} | 💰 ${r.amount} | 📝 ${r.memo}`;
+      list.appendChild(div);
+    });
+  </script>
+</body>
+</html>

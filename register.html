@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>회원가입</title>
+</head>
+<body>
+  <h2>회원가입</h2>
+  <input id="username" placeholder="아이디" />
+  <input id="password" type="password" placeholder="비밀번호" />
+  <button onclick="register()">가입하기</button>
+  <p><a href="login.html">이미 계정이 있나요?</a></p>
+
+  <script>
+    function register() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      if (!username || !password) return alert("입력해주세요.");
+
+      let users = JSON.parse(localStorage.getItem("users") || "[]");
+      if (users.find(u => u.username === username)) return alert("이미 존재하는 아이디입니다.");
+
+      users.push({ username, password });
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("가입 완료! 로그인 해주세요.");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

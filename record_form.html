@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>운송기록 입력</title>
+</head>
+<body>
+  <h2>운송기록 입력</h2>
+  <p>날짜: <span id="selectedDate"></span></p>
+  <input id="jobName" placeholder="작업지명" />
+  <input id="amount" placeholder="금액" type="number" />
+  <textarea id="memo" placeholder="비고"></textarea>
+  <button onclick="saveRecord()">저장</button>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const date = urlParams.get("date");
+    document.getElementById("selectedDate").innerText = date;
+
+    function saveRecord() {
+      const job = document.getElementById("jobName").value;
+      const amount = document.getElementById("amount").value;
+      const memo = document.getElementById("memo").value;
+      const user = localStorage.getItem("currentUser") || "unknown";
+
+      const record = { date, job, amount, memo, user };
+      let records = JSON.parse(localStorage.getItem("records") || "[]");
+      records.push(record);
+      localStorage.setItem("records", JSON.stringify(records));
+      alert("저장되었습니다!");
+      window.location.href = "record_view.html";
+    }
+  </script>
+</body>
+</html>
